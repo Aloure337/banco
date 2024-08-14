@@ -192,7 +192,12 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                 if (docs.equals("CPF")||docs.equals("RG")){
                     System.out.println("Digite seu "+ docs+":");
                     doc=avoid.nextLine();
+                    if((docs.equals("CPF")&&doc.length()==11)||(docs.equals("RG")&&doc.length()>=7&&doc.length()<=9)){
                     break;
+                    }else{
+                        System.out.println("Erro: o "+docs+" deve ter "+ (docs.equals("CPF") ? "11" : "7 a 9") + " caracteres. Tente novamente.");
+                            }
+                    
                 }else{
                     System.out.println("Opcao invalida. Por favor, escolha CPF ou RG.");
                 }
@@ -207,6 +212,18 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                     break;
                 }
             }
+            if (docs.equals("CPF")){
+                doc=doc.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
+            }else if(docs.equals("RG")){
+                if(doc.length()==7){
+                    doc=doc.replaceAll("(\\d{1})(\\d{3})(\\d{3})", "$1.$2.$3");
+                }else if(doc.length()==8){
+                    doc=doc.replaceAll("(\\d{2})(\\d{3})(\\d{3})", "$1.$2.$3");
+                }else if(doc.length()==9){
+                    doc=doc.replaceAll("(\\d{2})(\\d{3})(\\d{3})(\\d{1})", "$1.$2.$3-$4");
+                }
+            }
+            tele=tele.replaceAll("(\\d{2})(\\d{5})(\\d{4})","($1)$2-$3");
             Random maluco = new Random();
             usuario.nConta = maluco.nextInt(90) + 10;
             while(true){
@@ -226,7 +243,7 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                     }
             }
             break;
-                } 
+                }
         case 6 -> {
                 break;
                 }
