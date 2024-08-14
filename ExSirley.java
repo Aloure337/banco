@@ -1,8 +1,8 @@
-package exsirley;
+package banco;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Random;
-public class ExSirley {
+public class Banco {
 
     public static void main(String[] args) {
         conta c = new conta();
