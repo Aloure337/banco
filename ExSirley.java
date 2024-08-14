@@ -236,6 +236,13 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                         System.out.println("Agora vamos acompanhar os dados da sua conta!\n");
                         System.out.println("Nome: "+usuario.titular+" "+sobre+"\n"+docs+": "+doc+"\nTelefone: "+tele);
                         System.out.println("Numero da conta: "+usuario.nConta+"\nSaldo inicial R$"+usuario.saldo);
+                        System.out.println("Numero da conta: "+usuario.nConta+"\nSaldo inicial R$"+usuario.saldo);
+                        try (BufferedWriter dadinhos = new BufferedWriter(new FileWriter("cadastar.txt", true))){
+                            dadinhos.write("Nome: "+usuario.titular+" "+sobre);
+                            dadinhos.newLine();
+                        }catch (IOException e){
+                            System.out.println("Ocorreu um erro ao salvar os dados. Tente novamente mais tarde");
+                        }
                         System.out.println(usuario.titular+", seja bem vindo ao seu novo banco!");
                        break;
                     } else {
