@@ -25,11 +25,14 @@ j.nConta=4321;
 j.titular="Jonas";
 contas.add(c);
 contas.add(j);
+        
 String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transferir \n4.Mostrar Dados \n5.Cadastrar Titular \n6.Sair \n Digite a opcao:";
+   
     do{
         System.out.println(menu);
         op=avoid.nextInt();
         switch(op){
+                
         case 1 -> {
            System.out.println("Digite o numero da sua conta: ");
                     int nconta = avoid.nextInt();
@@ -48,6 +51,7 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                         System.out.println("Conta invalida!");
                     }
                 }
+                
         case 2 -> {
             System.out.println("Digite o numero da sua conta: ");
             int nconta=avoid.nextInt();
@@ -85,6 +89,7 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                 }
             } 
         }
+                
         case 3 -> {
             System.out.println("Digite o numero da conta de origem: ");
             int nori=avoid.nextInt();
@@ -118,6 +123,7 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                 System.out.println("\nTransferencia falhou. Verifique o saldo e tente novamente.");
             }
         }
+                
         case 4 -> {
             System.out.println("Digite o numero da sua conta: ");
             int nconta = avoid.nextInt();
@@ -129,6 +135,7 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
             }
             break;  
             }
+                
         case 5 -> {
             conta novoUsuario = new conta();
             avoid.nextLine();
@@ -221,13 +228,19 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
             }
             break;
                 }
+                
         case 6 -> {
                 break;
                 }
+                
         default -> System.out.println("Opcao invalida");   
             }
+        
         }while(op!=6);  
     }
+
+
+    
     public static conta encontrarConta(int nconta, ArrayList<conta> contas) {
         for (conta conta : contas) {
             if (conta.obternConta() == nconta) {
