@@ -1,10 +1,11 @@
 package banco;
 
 public class conta {
-    public int nConta;
+      public int nConta;
     public String titular;
     public double saldo;
     public String sobrenome;
+    
     public boolean sacar(double valor){
         if(this.saldo>=valor){
             this.saldo-=valor;
@@ -18,6 +19,7 @@ public class conta {
             this.saldo+=valor;
             return true;
     }else{
+           
             return false;
         }
     }
@@ -32,6 +34,7 @@ public class conta {
             
             return true;
         } else {
+            
             return false; 		        } 		    
     }
     public int obternConta() {
@@ -43,6 +46,5 @@ public class conta {
     public double obtersaldo() {
 		        return saldo;
 		    }
+    
 }
-
-
