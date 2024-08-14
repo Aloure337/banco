@@ -1,4 +1,4 @@
-package exsirley;
+package banco;
 
 public class conta {
     public int nConta;
