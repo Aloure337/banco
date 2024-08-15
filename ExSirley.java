@@ -92,7 +92,7 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
             conta ori=encontrarConta(nori, contas);
             if(ori==null){
                 JOptionPane.showMessageDialog(null,"Conta invalida!");
-                break;
+                
             }
             String ndesStr=JOptionPane.showInputDialog("Digite o numero da conta de destino: ");
             int ndes=Integer.parseInt(ndesStr);
@@ -108,74 +108,73 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                 JOptionPane.showMessageDialog(null,"\nTransferencia de R$" + valor + " para a conta de " + des.obtertitular() + " realizada com sucesso.");
             } else if (valor == ori.obtersaldo()) {
                 String verStr=JOptionPane.showInputDialog("\nA tranferencia a seguir vai zerar o saldo da conta. Deseja continuar? (sim/nao)");
-                    String ver = verStr.trim().toLowerCase();                   
                     if  (verStr.equalsIgnoreCase("sim")) {
                         ori.transferir(des, valor);
-                        //PROBLEMA AQUI!!! ele não ta fazendo a verificação 
                         JOptionPane.showMessageDialog(null,"\nTransferencia efetuada com sucesso!");
-                        break;
+                        
                     }else {
                         JOptionPane.showMessageDialog(null,"\nTransferencia cancelada!");   
                     }
             } else {
-                System.out.println("\nTransferencia falhou. Verifique o saldo e tente novamente.");
+                JOptionPane.showMessageDialog(null,"\nTransferencia falhou. Verifique o saldo e tente novamente.");
             }
         }
-                
-        case 4 -> {
-            System.out.println("Digite o numero da sua conta: ");
-            int nconta = avoid.nextInt();
+            break;    
+        case 4 : {
+            String ncontaStr=JOptionPane.showInputDialog("Digite o numero da sua conta: ");
+            int nconta=Integer.parseInt(ncontaStr);
             usuario = encontrarConta(nconta, contas);
             if (usuario != null) {
-                System.out.print(usuario.mDados());
+                JOptionPane.showMessageDialog(null,usuario.mDados());
             } else {
-                System.out.println("Conta invalida!");
+                JOptionPane.showMessageDialog(null,"Conta invalida!");
             }
             break;  
             }
                 
-        case 5 -> {
+        case 5 : {
             conta novoUsuario = new conta();
-            avoid.nextLine();
+            
             String ncomp = "";
             while (true) {
-                System.out.println("Digite seu nome COMPLETO (pelo menos duas palavras):");
-                ncomp = avoid.nextLine().trim();  
-                String[] partes = ncomp.split("\\s+"); 
+                String ncompStr=JOptionPane.showInputDialog("Digite seu nome COMPLETO (pelo menos duas palavras):");
+                  
+                String[] partes = ncompStr.split("\\s+"); 
                 if (partes.length >= 2) {
                     novoUsuario.titular = partes[0];  
                     novoUsuario.sobrenome = String.join(" ", Arrays.copyOfRange(partes, 1, partes.length));
                     break;  
                 } else {
-                    System.out.println("Erro: O nome deve conter pelo menos duas palavras.");
+                    JOptionPane.showMessageDialog(null,"Erro: O nome deve conter pelo menos duas palavras.");
                 }
             }
             String[] ndiv=ncomp.split(" ", 2);
             novoUsuario.titular=ndiv[0];
             String sobre = ndiv.length>1 ? ndiv[1]:"";
             String doc="";
-            String docs;
+            String docs = null;
             while (true){
-                System.out.println("Voce deseja informar o CPF ou RG? \nUtilize letras maiusculas");
-                docs=avoid.nextLine().trim();
-                if (docs.equals("CPF")||docs.equals("RG")){
-                    System.out.println("Digite seu "+ docs+":");
-                    doc=avoid.nextLine();
-                    if((docs.equals("CPF")&&doc.length()==11)||(docs.equals("RG")&&doc.length()>=7&&doc.length()<=9)){
-                    break;
-                    }else{
-                        System.out.println("Erro: o "+docs+" deve ter "+ (docs.equals("CPF") ? "11" : "7 a 9") + " caracteres. Tente novamente.");
-                            }
+                String docsStr=JOptionPane.showInputDialog("Voce deseja informar o CPF ou RG? \nUtilize letras maiusculas");
+                
+                if (docsStr.equals("CPF")||docsStr.equals("RG")){
+                    String ncompStr=JOptionPane.showInputDialog("Digite seu "+ docsStr+":");
+                    
+                    if((docsStr.equals("CPF")&&doc.length()==11)||(docsStr.equals("RG")&&doc.length()>=7&&doc.length()<=9)){
+                        JOptionPane.showMessageDialog(null,"Erro: o "+docsStr+" deve ter "+ (docsStr.equals("CPF") ? "11" : "7 a 9") + " caracteres. Tente novamente.");
+                        break;
+                    
+                    }
                 }else{
-                    System.out.println("Opcao invalida. Por favor, escolha CPF ou RG.");
+                    JOptionPane.showMessageDialog(null,"Opcao invalida. Por favor, escolha CPF ou RG.");
                 }
+                break;
             }
-            System.out.println("Digite seu telefone (apenas numeros, com DDD)");
+            String teleStr=JOptionPane.showInputDialog("Digite seu telefone (apenas numeros, com DDD)");
             String tele="";
             while(true){
                 tele=avoid.nextLine().trim();
                 if(11!=tele.length()){
-                    System.out.println("Numero invalido. Tente novamente");
+                    JOptionPane.showMessageDialog(null,"Numero invalido. Tente novamente");
                 } else {
                     break;
                 }
@@ -195,14 +194,14 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
             Random maluco = new Random();
             novoUsuario.nConta = maluco.nextInt(9000) + 1000;
             while(true){
-            System.out.println("Certo, estamos quase finalizando! Para finalizar o cadastro eh necessario fazer um deposito inicial, sem limite de valor\nQual sera o valor do seu deposito inicial?");
-                    double dInit=avoid.nextDouble(); 
+            String dInitStr=JOptionPane.showInputDialog("Certo, estamos quase finalizando! Para finalizar o cadastro eh necessario fazer um deposito inicial, sem limite de valor\nQual sera o valor do seu deposito inicial?");
+                    double dInit=Double.parseDouble(dInitStr);
                     if (dInit > 0) {
                         novoUsuario.saldo = dInit;
-                        System.out.println("Pronto! O seu cadastro foi finalizado");
-                        System.out.println("Agora vamos acompanhar os dados da sua conta!\n");
-                        System.out.println("Nome: "+novoUsuario.titular+" "+novoUsuario.sobrenome+"\n"+docs+": "+doc+"\nTelefone: "+tele);
-                        System.out.println("Numero da conta: "+novoUsuario.nConta+"\nSaldo inicial R$"+novoUsuario.saldo);
+                        JOptionPane.showMessageDialog(null,"Pronto! O seu cadastro foi finalizado"+"\nAgora vamos acompanhar os dados da sua conta!");
+                        
+                        JOptionPane.showMessageDialog(null, "Nome: " + novoUsuario.titular + " " + novoUsuario.sobrenome + "\n" + docsStr + ": " + doc + "\nTelefone: " + teleStr + "\nNumero da conta: " + novoUsuario.nConta + "\nSaldo inicial R$" + novoUsuario.saldo);
+                        
                         try (BufferedWriter dadinhos = new BufferedWriter(new FileWriter("cadastrar.txt", true))){
                             dadinhos.write("\nNome: "+novoUsuario.titular+" "+sobre);
                             dadinhos.newLine();
@@ -215,23 +214,23 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                             dadinhos.write("Saldo inicial R$"+novoUsuario.saldo);
                             
                         }catch (IOException e){
-                            System.out.println("Ocorreu um erro ao salvar os dados. Tente novamente mais tarde");
+                            JOptionPane.showMessageDialog(null,"Ocorreu um erro ao salvar os dados. Tente novamente mais tarde");
                         }
                         contas.add(novoUsuario);
-                        System.out.println(novoUsuario.titular+", seja bem vindo ao seu novo banco!");
+                        JOptionPane.showMessageDialog(null,novoUsuario.titular+", seja bem vindo ao seu novo banco!");
                        break;
                     } else {
-                        System.out.println("O deposito inicial deve ser maior que 0. Tente novamente.");
+                        JOptionPane.showMessageDialog(null,"O deposito inicial deve ser maior que 0. Tente novamente.");
                     }
             }
             break;
                 }
                 
-        case 6 -> {
+        case 6 : {
                 break;
                 }
                 
-        default -> System.out.println("Opcao invalida");   
+        default : JOptionPane.showMessageDialog(null,"Opcao invalida");   
             }
         
         }while(op!=6);  
@@ -252,3 +251,4 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
         return usuario;
     }
 }
+
