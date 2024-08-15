@@ -102,7 +102,7 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                 break;
             }
             String valorStr=JOptionPane.showInputDialog("Digite o valor a ser transferido: ");
-            double valor = avoid.nextInt();
+            double valor = Double.parseDouble(valorStr);
             if(valor<ori.obtersaldo()){
                 ori.transferir(des, valor);
                 JOptionPane.showMessageDialog(null,"\nTransferencia de R$" + valor + " para a conta de " + des.obtertitular() + " realizada com sucesso.");
