@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 public class Banco {
 
     public static void main(String[] args) {
@@ -17,92 +18,87 @@ conta usuario=new conta();
 Scanner avoid = new Scanner(System.in);
 double saque=0; 
 int op=0;
-c.saldo=0;
+c.saldo=15000;
 c.nConta=1234;
 c.titular="Carlos";
-j.saldo=0;
+j.saldo=15000;
 j.nConta=4321;
 j.titular="Jonas";
 contas.add(c);
 contas.add(j);
         
-String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transferir \n4.Mostrar Dados \n5.Cadastrar Titular \n6.Sair \n Digite a opcao:";
+String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transferir \n4.Mostrar Dados \n5.Cadastrar Titular \n6.Sair";
    
     do{
-        System.out.println(menu);
-        op=avoid.nextInt();
+        String opStr =JOptionPane.showInputDialog(menu+"\n Digite a opcao:");
+        op=Integer.parseInt(opStr);
         switch(op){
                 
-        case 1 -> {
-           System.out.println("Digite o numero da sua conta: ");
-                    int nconta = avoid.nextInt();
-                    avoid.nextLine();
+        case 1 : {
+           String ncontaStr=JOptionPane.showInputDialog("Digite o numero da sua conta: ");
+                    int nconta = Integer.parseInt(ncontaStr);
                     usuario = encontrarConta(nconta, contas);
                     if (usuario != null) {
-                        System.out.println("Digite o valor a ser depositado: ");
-                        double depos = avoid.nextDouble();
+                        String deposStr=JOptionPane.showInputDialog("Digite o valor a ser depositado: ");
+                        double depos = Double.parseDouble(deposStr);
                         if (usuario.depositar(depos)) {
-                            System.out.println("\nDeposito efetuado com sucesso!");
-                            System.out.println("O seu saldo agora eh R$" + usuario.obtersaldo());
+                            JOptionPane.showMessageDialog(null,"\nDeposito efetuado com sucesso!"+"\nO seu saldo agora eh R$" + usuario.obtersaldo());
+                            
                         } else {
-                            System.out.println("\nOperacao nao realizada!");
+                            JOptionPane.showMessageDialog(null,"\nOperacao nao realizada!");
                         }
                     } else {
-                        System.out.println("Conta invalida!");
+                        JOptionPane.showMessageDialog(null,"Conta invalida!");
                     }
                 }
-                
-        case 2 -> {
-            System.out.println("Digite o numero da sua conta: ");
-            int nconta=avoid.nextInt();
-            avoid.nextLine();
+                break;
+        case 2 : {
+            String ncontaStr=JOptionPane.showInputDialog("Digite o numero da sua conta: ");
+            int nconta=Integer.parseInt(ncontaStr);
             usuario= encontrarConta(nconta, contas);
             if (usuario == null) {
-                System.out.println("Conta invalida! Tente novamente.");
+                JOptionPane.showMessageDialog(null,"Conta invalida! Tente novamente.");
                 break;
             }
-            System.out.println("Digite o valor a ser sacado: ");
-            saque=avoid.nextDouble();
-            avoid.nextLine();
-            while (true) {
+            String saqueStr=JOptionPane.showInputDialog("Digite o valor a ser sacado: ");
+            saque=Double.parseDouble(saqueStr);
                 if(saque<0){
-                    System.out.println("Valor invalido: nao eh possível sacar valores negativos.");
+                    JOptionPane.showMessageDialog(null,"Valor invalido: nao eh possível sacar valores negativos.");
                 }else if(saque<usuario.obtersaldo()){
                     if(usuario.sacar(saque)){
-                        System.out.println("\nSaque efetuado com sucesso!");
-                        System.out.println("\nO seu saldo agora eh R$"+c.obtersaldo());
+                        JOptionPane.showMessageDialog(null,"\nSaque efetuado com sucesso!"+"\nO seu saldo agora eh R$"+usuario.obtersaldo());
                     }else{
-                        System.out.println("\nOperacao nao realizada!");
+                        JOptionPane.showMessageDialog(null,"\nOperacao nao realizada!");
                     }
                 }else if(saque==usuario.obtersaldo()){
-                    System.out.println("\nO saque a seguir vai zerar o saldo da conta. Deseja continuar? (sim/nao)");
-                    String ver = avoid.next();                    
-                    if  (ver.equalsIgnoreCase("sim")) {
+                    String verStr=JOptionPane.showInputDialog("\nO saque a seguir vai zerar o saldo da conta. Deseja continuar? (sim/nao)");
+                    String ver = verStr.trim().toLowerCase();                   
+                    if  (verStr.equalsIgnoreCase("sim")) {
                         usuario.sacar(saque);
-                        System.out.println("\nSaque efetuado com sucesso!");
+                        JOptionPane.showMessageDialog(null,"\nSaque efetuado com sucesso!");
                         break;
                     }else {
-                        System.out.println("\nSaque cancelado.");   
+                        JOptionPane.showMessageDialog(null,"\nSaque cancelado.");   
                     }
                 }else{
-                    System.out.println("O valor do saque eh maior do que o saldo disponivel na conta. Tente novamente mais tarde!");
+                    JOptionPane.showMessageDialog(null,"O valor do saque eh maior do que o saldo disponivel na conta. Tente novamente mais tarde!");
                 }
             } 
-        }
+            break;
                 
-        case 3 -> {
-            System.out.println("Digite o numero da conta de origem: ");
-            int nori=avoid.nextInt();
+        case 3 : {
+            String noriStr=JOptionPane.showInputDialog("Digite o numero da conta de origem: ");
+            int nori=Integer.parseInt(noriStr);
             conta ori=encontrarConta(nori, contas);
             if(ori==null){
-                System.out.println("Conta invalida!");
+                JOptionPane.showMessageDialog(null,"Conta invalida!");
                 break;
             }
-            System.out.println("Digite o numero da conta de destino: ");
-            int ndes=avoid.nextInt();
+            String ndesStr=JOptionPane.showInputDialog("Digite o numero da conta de destino: ");
+            int ndes=Integer.parseInt(ndesStr);
             conta des= encontrarConta(ndes, contas);
             if(des==null){
-                System.out.println("Conta invalida!");
+                JOptionPane.showMessageDialog(null,"Conta invalida!");
                 break;
             }
             System.out.println("Digite o valor a ser transferido: ");
