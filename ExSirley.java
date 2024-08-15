@@ -101,20 +101,22 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                 JOptionPane.showMessageDialog(null,"Conta invalida!");
                 break;
             }
-            System.out.println("Digite o valor a ser transferido: ");
+            String valorStr=JOptionPane.showInputDialog("Digite o valor a ser transferido: ");
             double valor = avoid.nextInt();
             if(valor<ori.obtersaldo()){
                 ori.transferir(des, valor);
-                System.out.println("\nTransferencia de R$" + valor + " para a conta de " + des.obtertitular() + " realizada com sucesso.");
+                JOptionPane.showMessageDialog(null,"\nTransferencia de R$" + valor + " para a conta de " + des.obtertitular() + " realizada com sucesso.");
             } else if (valor == ori.obtersaldo()) {
-                System.out.println("\nA transferencia a seguir vai zerar o saldo da conta. Deseja continuar? (sim/não)");
-                String ver = avoid.next();
-                if (ver.equalsIgnoreCase("sim")) {
-                    ori.transferir(des, valor);
-                    System.out.println("\nTransferencia de R$" + valor + " para a conta de " + des.obtertitular() + " realizada com sucesso.");
-                } else {
-                System.out.println("\nTransferencia cancelada.");
-                }
+                String verStr=JOptionPane.showInputDialog("\nA tranferencia a seguir vai zerar o saldo da conta. Deseja continuar? (sim/nao)");
+                    String ver = verStr.trim().toLowerCase();                   
+                    if  (verStr.equalsIgnoreCase("sim")) {
+                        ori.transferir(des, valor);
+                        //PROBLEMA AQUI!!! ele não ta fazendo a verificação 
+                        JOptionPane.showMessageDialog(null,"\nTransferencia efetuada com sucesso!");
+                        break;
+                    }else {
+                        JOptionPane.showMessageDialog(null,"\nTransferencia cancelada!");   
+                    }
             } else {
                 System.out.println("\nTransferencia falhou. Verifique o saldo e tente novamente.");
             }
