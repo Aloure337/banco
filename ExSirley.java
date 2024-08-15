@@ -6,7 +6,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 public class Banco {
 
     public static void main(String[] args) {
@@ -18,163 +17,160 @@ conta usuario=new conta();
 Scanner avoid = new Scanner(System.in);
 double saque=0; 
 int op=0;
-c.saldo=15000;
+c.saldo=0;
 c.nConta=1234;
 c.titular="Carlos";
-j.saldo=15000;
+j.saldo=0;
 j.nConta=4321;
 j.titular="Jonas";
 contas.add(c);
 contas.add(j);
-        
-String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transferir \n4.Mostrar Dados \n5.Cadastrar Titular \n6.Sair";
-   
+String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transferir \n4.Mostrar Dados \n5.Cadastrar Titular \n6.Sair \n Digite a opcao:";
     do{
-        String opStr =JOptionPane.showInputDialog(menu+"\n Digite a opcao:");
-        op=Integer.parseInt(opStr);
+        System.out.println(menu);
+        op=avoid.nextInt();
         switch(op){
-                
-        case 1 : {
-           String ncontaStr=JOptionPane.showInputDialog("Digite o numero da sua conta: ");
-                    int nconta = Integer.parseInt(ncontaStr);
+        case 1 -> {
+           System.out.println("Digite o numero da sua conta: ");
+                    int nconta = avoid.nextInt();
+                    avoid.nextLine();
                     usuario = encontrarConta(nconta, contas);
                     if (usuario != null) {
-                        String deposStr=JOptionPane.showInputDialog("Digite o valor a ser depositado: ");
-                        double depos = Double.parseDouble(deposStr);
+                        System.out.println("Digite o valor a ser depositado: ");
+                        double depos = avoid.nextDouble();
                         if (usuario.depositar(depos)) {
-                            JOptionPane.showMessageDialog(null,"\nDeposito efetuado com sucesso!"+"\nO seu saldo agora eh R$" + usuario.obtersaldo());
-                            
+                            System.out.println("\nDeposito efetuado com sucesso!");
+                            System.out.println("O seu saldo agora eh R$" + usuario.obtersaldo());
                         } else {
-                            JOptionPane.showMessageDialog(null,"\nOperacao nao realizada!");
+                            System.out.println("\nOperacao nao realizada!");
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null,"Conta invalida!");
+                        System.out.println("Conta invalida!");
                     }
                 }
-                break;
-        case 2 : {
-            String ncontaStr=JOptionPane.showInputDialog("Digite o numero da sua conta: ");
-            int nconta=Integer.parseInt(ncontaStr);
+        case 2 -> {
+            System.out.println("Digite o numero da sua conta: ");
+            int nconta=avoid.nextInt();
+            avoid.nextLine();
             usuario= encontrarConta(nconta, contas);
             if (usuario == null) {
-                JOptionPane.showMessageDialog(null,"Conta invalida! Tente novamente.");
+                System.out.println("Conta invalida! Tente novamente.");
                 break;
             }
-            String saqueStr=JOptionPane.showInputDialog("Digite o valor a ser sacado: ");
-            saque=Double.parseDouble(saqueStr);
+            System.out.println("Digite o valor a ser sacado: ");
+            saque=avoid.nextDouble();
+            avoid.nextLine();
+            while (true) {
                 if(saque<0){
-                    JOptionPane.showMessageDialog(null,"Valor invalido: nao eh possível sacar valores negativos.");
+                    System.out.println("Valor invalido: nao eh possível sacar valores negativos.");
                 }else if(saque<usuario.obtersaldo()){
                     if(usuario.sacar(saque)){
-                        JOptionPane.showMessageDialog(null,"\nSaque efetuado com sucesso!"+"\nO seu saldo agora eh R$"+usuario.obtersaldo());
+                        System.out.println("\nSaque efetuado com sucesso!");
+                        System.out.println("\nO seu saldo agora eh R$"+c.obtersaldo());
                     }else{
-                        JOptionPane.showMessageDialog(null,"\nOperacao nao realizada!");
+                        System.out.println("\nOperacao nao realizada!");
                     }
                 }else if(saque==usuario.obtersaldo()){
-                    String verStr=JOptionPane.showInputDialog("\nO saque a seguir vai zerar o saldo da conta. Deseja continuar? (sim/nao)");
-                    String ver = verStr.trim().toLowerCase();                   
-                    if  (verStr.equalsIgnoreCase("sim")) {
+                    System.out.println("\nO saque a seguir vai zerar o saldo da conta. Deseja continuar? (sim/nao)");
+                    String ver = avoid.next();                    
+                    if  (ver.equalsIgnoreCase("sim")) {
                         usuario.sacar(saque);
-                        JOptionPane.showMessageDialog(null,"\nSaque efetuado com sucesso!");
+                        System.out.println("\nSaque efetuado com sucesso!");
                         break;
                     }else {
-                        JOptionPane.showMessageDialog(null,"\nSaque cancelado.");   
+                        System.out.println("\nSaque cancelado.");   
                     }
                 }else{
-                    JOptionPane.showMessageDialog(null,"O valor do saque eh maior do que o saldo disponivel na conta. Tente novamente mais tarde!");
+                    System.out.println("O valor do saque eh maior do que o saldo disponivel na conta. Tente novamente mais tarde!");
                 }
             } 
-            break;
-                
-        case 3 : {
-            String noriStr=JOptionPane.showInputDialog("Digite o numero da conta de origem: ");
-            int nori=Integer.parseInt(noriStr);
+        }
+        case 3 -> {
+            System.out.println("Digite o numero da conta de origem: ");
+            int nori=avoid.nextInt();
             conta ori=encontrarConta(nori, contas);
             if(ori==null){
-                JOptionPane.showMessageDialog(null,"Conta invalida!");
-                
-            }
-            String ndesStr=JOptionPane.showInputDialog("Digite o numero da conta de destino: ");
-            int ndes=Integer.parseInt(ndesStr);
-            conta des= encontrarConta(ndes, contas);
-            if(des==null){
-                JOptionPane.showMessageDialog(null,"Conta invalida!");
+                System.out.println("Conta invalida!");
                 break;
             }
-            String valorStr=JOptionPane.showInputDialog("Digite o valor a ser transferido: ");
-            double valor = Double.parseDouble(valorStr);
+            System.out.println("Digite o numero da conta de destino: ");
+            int ndes=avoid.nextInt();
+            conta des= encontrarConta(ndes, contas);
+            if(des==null){
+                System.out.println("Conta invalida!");
+                break;
+            }
+            System.out.println("Digite o valor a ser transferido: ");
+            double valor = avoid.nextInt();
             if(valor<ori.obtersaldo()){
                 ori.transferir(des, valor);
-                JOptionPane.showMessageDialog(null,"\nTransferencia de R$" + valor + " para a conta de " + des.obtertitular() + " realizada com sucesso.");
+                System.out.println("\nTransferencia de R$" + valor + " para a conta de " + des.obtertitular() + " realizada com sucesso.");
             } else if (valor == ori.obtersaldo()) {
-                String verStr=JOptionPane.showInputDialog("\nA tranferencia a seguir vai zerar o saldo da conta. Deseja continuar? (sim/nao)");
-                    if  (verStr.equalsIgnoreCase("sim")) {
-                        ori.transferir(des, valor);
-                        JOptionPane.showMessageDialog(null,"\nTransferencia efetuada com sucesso!");
-                        
-                    }else {
-                        JOptionPane.showMessageDialog(null,"\nTransferencia cancelada!");   
-                    }
+                System.out.println("\nA transferencia a seguir vai zerar o saldo da conta. Deseja continuar? (sim/não)");
+                String ver = avoid.next();
+                if (ver.equalsIgnoreCase("sim")) {
+                    ori.transferir(des, valor);
+                    System.out.println("\nTransferencia de R$" + valor + " para a conta de " + des.obtertitular() + " realizada com sucesso.");
+                } else {
+                System.out.println("\nTransferencia cancelada.");
+                }
             } else {
-                JOptionPane.showMessageDialog(null,"\nTransferencia falhou. Verifique o saldo e tente novamente.");
+                System.out.println("\nTransferencia falhou. Verifique o saldo e tente novamente.");
             }
         }
-            break;    
-        case 4 : {
-            String ncontaStr=JOptionPane.showInputDialog("Digite o numero da sua conta: ");
-            int nconta=Integer.parseInt(ncontaStr);
+        case 4 -> {
+            System.out.println("Digite o numero da sua conta: ");
+            int nconta = avoid.nextInt();
             usuario = encontrarConta(nconta, contas);
             if (usuario != null) {
-                JOptionPane.showMessageDialog(null,usuario.mDados());
+                System.out.print(usuario.mDados());
             } else {
-                JOptionPane.showMessageDialog(null,"Conta invalida!");
+                System.out.println("Conta invalida!");
             }
             break;  
             }
-                
-        case 5 : {
+        case 5 -> {
             conta novoUsuario = new conta();
-            
+            avoid.nextLine();
             String ncomp = "";
             while (true) {
-                String ncompStr=JOptionPane.showInputDialog("Digite seu nome COMPLETO (pelo menos duas palavras):");
-                  
-                String[] partes = ncompStr.split("\\s+"); 
+                System.out.println("Digite seu nome COMPLETO (pelo menos duas palavras):");
+                ncomp = avoid.nextLine().trim();  
+                String[] partes = ncomp.split("\\s+"); 
                 if (partes.length >= 2) {
                     novoUsuario.titular = partes[0];  
                     novoUsuario.sobrenome = String.join(" ", Arrays.copyOfRange(partes, 1, partes.length));
                     break;  
                 } else {
-                    JOptionPane.showMessageDialog(null,"Erro: O nome deve conter pelo menos duas palavras.");
+                    System.out.println("Erro: O nome deve conter pelo menos duas palavras.");
                 }
             }
             String[] ndiv=ncomp.split(" ", 2);
             novoUsuario.titular=ndiv[0];
             String sobre = ndiv.length>1 ? ndiv[1]:"";
             String doc="";
-            String docs = null;
+            String docs;
             while (true){
-                String docsStr=JOptionPane.showInputDialog("Voce deseja informar o CPF ou RG? \nUtilize letras maiusculas");
-                
-                if (docsStr.equals("CPF")||docsStr.equals("RG")){
-                    String ncompStr=JOptionPane.showInputDialog("Digite seu "+ docsStr+":");
-                    
-                    if((docsStr.equals("CPF")&&doc.length()==11)||(docsStr.equals("RG")&&doc.length()>=7&&doc.length()<=9)){
-                        JOptionPane.showMessageDialog(null,"Erro: o "+docsStr+" deve ter "+ (docsStr.equals("CPF") ? "11" : "7 a 9") + " caracteres. Tente novamente.");
-                        break;
-                    
-                    }
+                System.out.println("Voce deseja informar o CPF ou RG? \nUtilize letras maiusculas");
+                docs=avoid.nextLine().trim();
+                if (docs.equals("CPF")||docs.equals("RG")){
+                    System.out.println("Digite seu "+ docs+":");
+                    doc=avoid.nextLine();
+                    if((docs.equals("CPF")&&doc.length()==11)||(docs.equals("RG")&&doc.length()>=7&&doc.length()<=9)){
+                    break;
+                    }else{
+                        System.out.println("Erro: o "+docs+" deve ter "+ (docs.equals("CPF") ? "11" : "7 a 9") + " caracteres. Tente novamente.");
+                            }
                 }else{
-                    JOptionPane.showMessageDialog(null,"Opcao invalida. Por favor, escolha CPF ou RG.");
+                    System.out.println("Opcao invalida. Por favor, escolha CPF ou RG.");
                 }
-                break;
             }
-            String teleStr=JOptionPane.showInputDialog("Digite seu telefone (apenas numeros, com DDD)");
+            System.out.println("Digite seu telefone (apenas numeros, com DDD)");
             String tele="";
             while(true){
                 tele=avoid.nextLine().trim();
                 if(11!=tele.length()){
-                    JOptionPane.showMessageDialog(null,"Numero invalido. Tente novamente");
+                    System.out.println("Numero invalido. Tente novamente");
                 } else {
                     break;
                 }
@@ -194,14 +190,14 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
             Random maluco = new Random();
             novoUsuario.nConta = maluco.nextInt(9000) + 1000;
             while(true){
-            String dInitStr=JOptionPane.showInputDialog("Certo, estamos quase finalizando! Para finalizar o cadastro eh necessario fazer um deposito inicial, sem limite de valor\nQual sera o valor do seu deposito inicial?");
-                    double dInit=Double.parseDouble(dInitStr);
+            System.out.println("Certo, estamos quase finalizando! Para finalizar o cadastro eh necessario fazer um deposito inicial, sem limite de valor\nQual sera o valor do seu deposito inicial?");
+                    double dInit=avoid.nextDouble(); 
                     if (dInit > 0) {
                         novoUsuario.saldo = dInit;
-                        JOptionPane.showMessageDialog(null,"Pronto! O seu cadastro foi finalizado"+"\nAgora vamos acompanhar os dados da sua conta!");
-                        
-                        JOptionPane.showMessageDialog(null, "Nome: " + novoUsuario.titular + " " + novoUsuario.sobrenome + "\n" + docsStr + ": " + doc + "\nTelefone: " + teleStr + "\nNumero da conta: " + novoUsuario.nConta + "\nSaldo inicial R$" + novoUsuario.saldo);
-                        
+                        System.out.println("Pronto! O seu cadastro foi finalizado");
+                        System.out.println("Agora vamos acompanhar os dados da sua conta!\n");
+                        System.out.println("Nome: "+novoUsuario.titular+" "+novoUsuario.sobrenome+"\n"+docs+": "+doc+"\nTelefone: "+tele);
+                        System.out.println("Numero da conta: "+novoUsuario.nConta+"\nSaldo inicial R$"+novoUsuario.saldo);
                         try (BufferedWriter dadinhos = new BufferedWriter(new FileWriter("cadastrar.txt", true))){
                             dadinhos.write("\nNome: "+novoUsuario.titular+" "+sobre);
                             dadinhos.newLine();
@@ -212,32 +208,25 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                             dadinhos.write("Numero da conta: "+novoUsuario.nConta);
                             dadinhos.newLine();
                             dadinhos.write("Saldo inicial R$"+novoUsuario.saldo);
-                            
                         }catch (IOException e){
-                            JOptionPane.showMessageDialog(null,"Ocorreu um erro ao salvar os dados. Tente novamente mais tarde");
+                            System.out.println("Ocorreu um erro ao salvar os dados. Tente novamente mais tarde");
                         }
                         contas.add(novoUsuario);
-                        JOptionPane.showMessageDialog(null,novoUsuario.titular+", seja bem vindo ao seu novo banco!");
+                        System.out.println(novoUsuario.titular+", seja bem vindo ao seu novo banco!");
                        break;
                     } else {
-                        JOptionPane.showMessageDialog(null,"O deposito inicial deve ser maior que 0. Tente novamente.");
+                        System.out.println("O deposito inicial deve ser maior que 0. Tente novamente.");
                     }
             }
             break;
                 }
-                
-        case 6 : {
+        case 6 -> {
                 break;
                 }
-                
-        default : JOptionPane.showMessageDialog(null,"Opcao invalida");   
+        default -> System.out.println("Opcao invalida");   
             }
-        
         }while(op!=6);  
     }
-
-
-    
     public static conta encontrarConta(int nconta, ArrayList<conta> contas) {
         for (conta conta : contas) {
             if (conta.obternConta() == nconta) {
