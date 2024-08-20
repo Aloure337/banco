@@ -170,12 +170,14 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                 break;
             }
             String teleStr=JOptionPane.showInputDialog("Digite seu telefone (apenas numeros, com DDD)");
-            String tele="";
+            String tele="" ;
             while(true){
-                tele=avoid.nextLine().trim();
-                if(11!=tele.length()){
+                
+                if(tele.length()!=11){
                     JOptionPane.showMessageDialog(null,"Numero invalido. Tente novamente");
+                    break;
                 } else {
+                    
                     break;
                 }
             }
@@ -200,7 +202,7 @@ String menu="\nBem vindo ao Sistema Bancario. \n1.Depositar \n2.Sacar \n3.Transf
                         novoUsuario.saldo = dInit;
                         JOptionPane.showMessageDialog(null,"Pronto! O seu cadastro foi finalizado"+"\nAgora vamos acompanhar os dados da sua conta!");
                         
-                        JOptionPane.showMessageDialog(null, "Nome: " + novoUsuario.titular + " " + novoUsuario.sobrenome + "\n" + docsStr + ": " + doc + "\nTelefone: " + teleStr + "\nNumero da conta: " + novoUsuario.nConta + "\nSaldo inicial R$" + novoUsuario.saldo);
+                        JOptionPane.showMessageDialog(null, "Nome: " + novoUsuario.titular + " " + novoUsuario.sobrenome + "\n" + docs + ": " + doc + "\nTelefone: " + teleStr + "\nNumero da conta: " + novoUsuario.nConta + "\nSaldo inicial R$" + novoUsuario.saldo);
                         
                         try (BufferedWriter dadinhos = new BufferedWriter(new FileWriter("cadastrar.txt", true))){
                             dadinhos.write("\nNome: "+novoUsuario.titular+" "+sobre);
